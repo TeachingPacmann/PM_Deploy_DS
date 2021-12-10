@@ -99,21 +99,21 @@ def run(params, xpath, ypath, dump_path, state='fit'):
     joblib.dump(df_normalized, dump_path)
 
 
-if __name__ == "__main__":
-    f = open("src/params/preprocess_params.yaml", "r")
-    params = yaml.load(f, Loader=yaml.SafeLoader)
-    f.close()
+#if __name__ == "__main__":
+#    f = open("src/params/preprocess_params.yaml", "r")
+#    params = yaml.load(f, Loader=yaml.SafeLoader)
+#    f.close()
     
-    temp = ['TRAIN','VALID','TEST']
+#    temp = ['TRAIN','VALID','TEST']
     
-    for subgroup in temp:
-        xpath = params[f'X_PATH_{subgroup}']
-        ypath = params[f'Y_PATH_{subgroup}']
-        dump_path = params[f'DUMP_{subgroup}']
+#    for subgroup in temp:
+#        xpath = params[f'X_PATH_{subgroup}']
+#        ypath = params[f'Y_PATH_{subgroup}']
+#        dump_path = params[f'DUMP_{subgroup}']
         
-        if subgroup == 'TRAIN':
-            state = 'fit'
-        else:
-            state = 'transform'
+#        if subgroup == 'TRAIN':
+#            state = 'fit'
+#        else:
+#            state = 'transform'
         
-        run(params, xpath, ypath, dump_path, state)
+#        run(params, xpath, ypath, dump_path, state)

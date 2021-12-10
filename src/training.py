@@ -21,33 +21,38 @@ def main(params):
 
     x_train, y_train, x_valid, y_valid  = model_lib.read_data(params)
 
-
     for model in train_log_dict['model']:
         param_model, base_model = model()
         train_log_dict['model_name'].append(base_model.__class__.__name__)
         print(
-            f'Fitting {base_model.__class__.__name__}, with weight: {weights}')
+           f'Fitting {base_model.__class__.__name__}')
 
         # Train
         t0 = time.time()
-        fitted_model = model_lib.fit(
+        fitted_model,best_estimator = model_lib.fit(
             x_train, y_train, base_model, param_model, params)
         elapsed_time = time.time() - t0
         print(f'elapsed time: {elapsed_time} s \n')
         train_log_dict['fit_time'].append(elapsed_time)
-        train_log_dict['model_fit'].append(fitted_model)
+        train_log_dict['model_fit'].append(best_estimator.__class__.__name__)
+        
+        best_estimator.fit(x_train, y_train)
+        train_log_dict['model_report'].append(best_estimator)
 
+        
         # Validate
-        score = model_lib.validation_score( x_valid, y_valid, fitted_model)
+        score = model_lib.validation_score( x_valid, y_valid, best_estimator)
+        #train_log_dict['model_score'].append(
+        #    report['f1-score']['macro avg'])
         train_log_dict['model_score'].append(
-            report['f1-score']['macro avg'])
+            score)
 
-    best_model, best_report, best_threshold, name = model_lib.select_model(
+
+    best_model, best_parameter, best_report = model_lib.select_model(
         train_log_dict)
     print(
-        f"Model: {name}, Score: {best_report['f1-score']['macro avg']}")
+        f"Model: {best_model}, Score: {best_report}, Parameter: {best_parameter}")
     joblib.dump(best_model, 'output/isrelated_model.pkl')
-    joblib.dump(best_threshold, 'output/isrelated_threshold.pkl')
+    joblib.dump(best_parameter, 'output/isrelated_parameter.pkl')
     joblib.dump(train_log_dict, 'output/isrelated_train_log.pkl')
-
-    print(f'\n {best_report}')
+    
