@@ -3,6 +3,7 @@ import numpy as np
 import joblib
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, OneHotEncoder
+from feature_engineering import main as add_feature
 import yaml
 
 
