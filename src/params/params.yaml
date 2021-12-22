@@ -96,6 +96,7 @@ Y_PATH_TEST: output/y_test.pkl
 DUMP_TRAIN: output/preprocessed_x_train.pkl
 DUMP_VALID: output/preprocessed_x_valid.pkl
 DUMP_TEST: output/preprocessed_x_test.pkl
+DUMP_PREDICT: output/preprocessed_x_predict.pkl
 MODEL_NAME: output/isrelated_model.pkl
 BEST_MODEL: output/isrelated_parameter.pkl
 TRAIN_LOG: output/isrelated_train_log.pkl
