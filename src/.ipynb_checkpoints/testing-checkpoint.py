@@ -23,7 +23,7 @@ def main(params):
     x_test, y_test  = read_data_test(params)
     score = model_lib.validation_score(x_test, y_test, main_model)
     test_log_dict['model_score'].append(score)
-    joblib.dump(test_log_dict, 'output/isrelated_test_log.pkl')
+    joblib.dump(test_log_dict, 'output/model/test/test_log.pkl')
     print(
         f"Model: {test_log_dict['model_name']},\n Score: {test_log_dict['model_score']},\n Model's parameter: {test_log_dict['model']}")
     

@@ -20,9 +20,9 @@ def numerical_imputer(numerical,
 
         imputer.fit(numerical)
         joblib.dump(imputer,
-                    "output/numerical_imputer.pkl")
+                    "output/preprocess_data/estimator/numerical_imputer.pkl")
     elif state == 'transform':
-        imputer = joblib.load("output/numerical_imputer.pkl")
+        imputer = joblib.load("output/preprocess_data/estimator/numerical_imputer.pkl")
         
     imputed = imputer.transform(numerical)
     imputed = pd.DataFrame(imputed)
@@ -47,10 +47,10 @@ def one_hot_encoder(x_cat,
         encoder = OneHotEncoder(sparse=False, handle_unknown='ignore')
         encoder.fit(x_cat)
         joblib.dump(encoder,
-                    "output/onehotencoder.pkl")
+                    "output/preprocess_data/estimator/onehotencoder.pkl")
         
     elif state == 'transform':
-        encoder = joblib.load("output/onehotencoder.pkl")
+        encoder = joblib.load("output/preprocess_data/estimator/onehotencoder.pkl")
     
     encoded = encoder.transform(x_cat)
     feat_names = encoder.get_feature_names_out(col)
@@ -70,10 +70,10 @@ def normalization(x_all,
         normalizer = StandardScaler()
         normalizer.fit(x_all)
         joblib.dump(normalizer,
-                    "output/normalizer.pkl")
+                    "output/preprocess_data/estimator/normalizer.pkl")
 
     elif state == 'transform':
-        normalizer = joblib.load("output/normalizer.pkl")
+        normalizer = joblib.load("output/preprocess_data/estimator/normalizer.pkl")
         
     normalized = normalizer.transform(x_all)
     normalized = pd.DataFrame(normalized)

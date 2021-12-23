@@ -48,11 +48,11 @@ def main(params):
             score)
 
 
-    best_model, best_parameter, best_report = model_lib.select_model(
+    best_model, best_estimator, best_report = model_lib.select_model(
         train_log_dict)
     print(
-        f"Model: {best_model}, Score: {best_report}, Parameter: {best_parameter}")
-    joblib.dump(best_model, 'output/isrelated_model.pkl')
-    joblib.dump(best_parameter, 'output/isrelated_parameter.pkl')
-    joblib.dump(train_log_dict, 'output/isrelated_train_log.pkl')
+        f"Model: {best_model}, Score: {best_report}, Parameter: {best_estimator}")
+    joblib.dump(best_model, f'output/model/train/base_model.pkl')
+    joblib.dump(best_estimator, 'output/model/train/best_estimator.pkl')
+    joblib.dump(train_log_dict, 'output/model/train/train_log.pkl')
     

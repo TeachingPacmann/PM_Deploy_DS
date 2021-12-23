@@ -20,7 +20,7 @@ def read_data(path,
     data = pd.read_csv(path)
     
     if save_file:
-        joblib.dump(data, "output/data.pkl")
+        joblib.dump(data, "output/read_data/data_original.pkl")
     
     if return_file:
         return data
@@ -38,8 +38,8 @@ def split_input_output(dataset,
                             axis = 1)
     
     if save_file:
-        joblib.dump(output_df, "output/output_df.pkl")
-        joblib.dump(input_df, "output/input_df.pkl")
+        joblib.dump(output_df, "output/read_data/output_df.pkl")
+        joblib.dump(input_df, "output/read_data/input_df.pkl")
     
     if return_file:
         return output_df, input_df
@@ -70,12 +70,12 @@ def split_data(data_input, data_ouput, return_file=False, TEST_SIZE=0.2):
             y_train,
             TEST_SIZE)
 
-    joblib.dump(x_train, "output/x_train.pkl")
-    joblib.dump(y_train, "output/y_train.pkl")
-    joblib.dump(x_valid, "output/x_valid.pkl")
-    joblib.dump(y_valid, "output/y_valid.pkl")
-    joblib.dump(x_test, "output/x_test.pkl")
-    joblib.dump(y_test, "output/y_test.pkl")
+    joblib.dump(x_train, "output/read_data/x_train.pkl")
+    joblib.dump(y_train, "output/read_data/y_train.pkl")
+    joblib.dump(x_valid, "output/read_data/x_valid.pkl")
+    joblib.dump(y_valid, "output/read_data/y_valid.pkl")
+    joblib.dump(x_test, "output/read_data/x_test.pkl")
+    joblib.dump(y_test, "output/read_data/y_test.pkl")
 
     if return_file:
         return x_train, y_train, \

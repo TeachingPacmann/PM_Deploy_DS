@@ -52,7 +52,7 @@ def feature_engineering_predict(data_to_predict):
     # df_categorical_encoded = prep.one_hot_encoder(df_categorical_imputed, state=state)
     # df_joined = pd.concat([df_numerical_imputed, df_categorical_encoded], axis=1)
     x_predict = prep.normalization(df_numerical_imputed, state=state) # df_joined
-    # joblib.dump(x_predict, dump_path)
+    joblib.dump(x_predict, dump_path)
     return x_predict
 
 if __name__ == "__main__":
@@ -101,7 +101,7 @@ if __name__ == "__main__":
     
     # dump log prediction result
     predict_dict['predicted'].append(y_predicted)
-    # joblib.dump(predict_dict, 'output/predict_log.pkl')
+    joblib.dump(predict_dict, 'output/predict/predict_log.pkl')
     
     print(f"Model: {predict_dict['model_name']},\n Predicted: {predict_dict['predicted']}\n")
     
