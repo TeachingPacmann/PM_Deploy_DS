@@ -84,17 +84,19 @@ def run(params, xpath, ypath, dump_path, state='fit'):
     house_variables = joblib.load(xpath)
     house_target = joblib.load(ypath)
     
-    house_numerical = house_variables[params['NUM_COLUMN']]
-    house_categorical = house_variables[params['CAT_COLUMN']]
+    # house_numerical = house_variables[params['NUM_COLUMN']]
+    # house_categorical = house_variables[params['CAT_COLUMN']]
+    
+    house_numerical = house_variables[params['PREDICT_COLUMN']] # comment
     
     df_numerical_imputed = numerical_imputer(house_numerical, state=state)
-    df_categorical_imputed = categorical_imputer(house_categorical)
+    # df_categorical_imputed = categorical_imputer(house_categorical)
     
-    df_categorical_encoded = one_hot_encoder(df_categorical_imputed, state=state)
+    # df_categorical_encoded = one_hot_encoder(df_categorical_imputed, state=state)
     
-    df_joined = pd.concat([df_numerical_imputed, df_categorical_encoded], axis=1)
+    # df_joined = pd.concat([df_numerical_imputed, df_categorical_encoded], axis=1)
     
-    df_normalized = normalization(df_joined, state=state)
+    df_normalized = normalization(df_numerical_imputed, state=state) # df_joined
     
     joblib.dump(df_normalized, dump_path)
 
