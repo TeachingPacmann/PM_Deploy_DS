@@ -29,7 +29,7 @@ def group_transforms(df):
 def main(x):
     df = x.copy
     df_clean = clean(df)
-    df_transform_math = mathematical_transforms(df_impute)
+    df_transform_math = mathematical_transforms(df_clean)
     df_transform = group_transforms(df_transform_math)
 
     
