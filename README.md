@@ -163,7 +163,7 @@ if __name__ == "__main__":
     params = yaml.load(f, Loader=yaml.SafeLoader)
     f.close()
     
-    # load model param and best model
+    # load model name and model estimator with best param
     model_name = joblib.load(params['MODEL_NAME'])
     main_model = joblib.load(params['BEST_MODEL'])
     
