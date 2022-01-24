@@ -10,7 +10,7 @@ Untuk membeli rumah, seseorang biasanya melalui banyak pertimbangan, dimulai dar
 
 
 ## **Methods**
-![](https://github.com/TeachingPacmann/PM_Deploy_DS/blob/43b1a0a6690af71e8db23d8bef91a4a945f27773/diagram.png)
+![](https://github.com/TeachingPacmann/PM_Deploy_DS/blob/52d1c869609d261498eb25530b58077521aa7719/diagram.png)
 
 ## **Splitting Data**
 
