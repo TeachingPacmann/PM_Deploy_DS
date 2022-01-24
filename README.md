@@ -2,7 +2,7 @@
 # **Prediksi Harga Rumah**
 
 ## **Latar Belakang**
-Untuk membeli rumah, seseorang biasanya melalui banyak pertimbangan, dimulai dari kebutuhan pribadi dan keadaan rumah. Namun di titik akhir biasanya pembeli rumah lebih memperhatikan harga rumah dibandingkan fasilitas yang ada didalam rumah. Oleh karena itu penting mengetahui atau memprediksi harga akhir rumah untuk menjadi preferensi seorang pembeli rumah untuk menentukan keputusan.
+Untuk membeli rumah, seseorang biasanya melalui banyak pertimbangan, dimulai dari menyesuaikan kebutuhan pribadi dan keadaan rumah. Namun untuk pengambilan keputusa akhir, biasanya pembeli rumah lebih memperhatikan harga rumah dibandingkan fasilitas yang ada didalam rumah. Oleh karena itu penting mengetahui atau memprediksi harga akhir rumah untuk menjadi preferensi seorang pembeli rumah untuk menentukan keputusan.
 
 
 ## **Objectives**
@@ -10,7 +10,7 @@ Untuk membeli rumah, seseorang biasanya melalui banyak pertimbangan, dimulai dar
 
 
 ## **Methods**
-![](-)
+![](https://github.com/TeachingPacmann/PM_Deploy_DS/blob/43b1a0a6690af71e8db23d8bef91a4a945f27773/diagram.png)
 
 ## **Splitting Data**
 
