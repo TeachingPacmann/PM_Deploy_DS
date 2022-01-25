@@ -9,6 +9,18 @@ Untuk membeli rumah, seseorang biasanya melalui banyak pertimbangan, dimulai dar
 - Membuat pipeline untuk membangun model prediksi rumah 
 
 
+
+## **The Training and Predict Scripts**
+
+1. Jalankan code berikut di terminal untuk menjalankan proses training dan testing
+```python
+python src/main.py
+```
+2. Jalankan code berikut di terminal untuk menjalankan proses prediksi data baru. Anda akan diminta memasukkan beberapa input secara manual pada terminal
+```python
+python src/predict.py
+```
+
 ## **Methods**
 ![](https://github.com/TeachingPacmann/PM_Deploy_DS/blob/52d1c869609d261498eb25530b58077521aa7719/diagram.png)
 
