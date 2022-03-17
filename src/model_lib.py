@@ -98,7 +98,6 @@ def select_model(train_log_dict):
     temp = []
     for score in train_log_dict['model_score']:
         temp.append(score['rmse'])
-    #print(temp)
     best_model = train_log_dict['model_fit'][temp.index(min(temp))]
     best_parameter = train_log_dict['model_report'][temp.index(min(temp))]
     best_report = train_log_dict['model_score'][temp.index(min(temp))]

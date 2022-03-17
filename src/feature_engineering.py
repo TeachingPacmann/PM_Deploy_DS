@@ -13,11 +13,11 @@ def mathematical_transforms(df):
     df["_OQuGLA"] = df.OverallQual * df.GrLivArea
     return df
 
-def main(x):
-    df = x.copy
-    df_clean = clean(df)
-    df_transform_math = mathematical_transforms(df_clean)
-    df_transform = group_transforms(df_transform_math)
-
-    joblib.dump(df_transform, f"output/feature.pkl")
+def main(x, state):
+    df = x.copy()
+    if (state=="predict"):
+        df_transform = mathematical_transforms(df)
+    else:
+        df_clean = clean(df)
+        df_transform = mathematical_transforms(df_clean)
     return df_transform

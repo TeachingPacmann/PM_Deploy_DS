@@ -24,8 +24,9 @@ X_train, y_train, X_valid, y_valid, X_test, y_test = split_data(input_df,
                                                                 True,
                                                                 params['TEST_SIZE'])
 
-#Feature Engineering
 temp = ['TRAIN','VALID','TEST']
+
+#Feature Engineering
 
 for subgroup in temp:
     print(f"Running on feature engineering {subgroup}...")
@@ -37,7 +38,6 @@ for subgroup in temp:
         state = 'fit'
     else:
         state = 'transform'
-
     ppr.run(params, xpath, ypath, dump_path, state)
 
     

@@ -87,20 +87,31 @@ CAT_COLUMN:
 - MiscFeature
 - SaleType
 - SaleCondition
-PREDICT_COLUMN:
-- OverallCond
+
+TRAIN_COLUMN:
+- OverallQual
 - GrLivArea
 - TotalBsmtSF
 - 1stFlrSF
 - GarageCars
 - GarageArea
+
+PREDICT_COLUMN:
+- OverallQual
+- GrLivArea
+- TotalBsmtSF
+- FirstFlrSF
+- GarageCars
+- GarageArea
+
 PREDICT_COLUMN_TYPE:
-    OverallCond: int
+    OverallQual: int
     GrLivArea: int
     TotalBsmtSF: int
-    1stFlrSF: int
+    FirstFlrSF: int
     GarageCars: int
     GarageArea: int
+    
 X_PATH_TRAIN: output/read_data/x_train.pkl
 Y_PATH_TRAIN: output/read_data/y_train.pkl
 X_PATH_VALID: output/read_data/x_valid.pkl
@@ -111,6 +122,6 @@ DUMP_TRAIN: output/preprocess_data/data/preprocessed_x_train.pkl
 DUMP_VALID: output/preprocess_data/data/preprocessed_x_valid.pkl
 DUMP_TEST: output/preprocess_data/data/preprocessed_x_test.pkl
 DUMP_PREDICT: output/predict/data/preprocessed_x_predict.pkl
-MODEL_NAME: output/model/train/base_model.pkl
+MODEL_NAME: output/model/train/model_name.pkl
 BEST_MODEL: output/model/train/best_estimator.pkl
 TRAIN_LOG: output/model/train/train_log.pkl

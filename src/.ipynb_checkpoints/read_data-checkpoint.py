@@ -81,17 +81,3 @@ def split_data(data_input, data_ouput, return_file=False, TEST_SIZE=0.2):
         return x_train, y_train, \
             x_valid, y_valid, \
             x_test, y_test
-
-#if __name__ == "__main__":
-#    DATA_PATH = "data/train.csv"
-#    TARGET_COLUMN = "SalePrice"
-#    TEST_SIZE = 0.2
-
-#    data_house = read_data(DATA_PATH)
-#    output_df, input_df = split_input_output(
-#                                data_house,
-#                                TARGET_COLUMN)
-#    X_train, y_train, X_valid, y_valid, X_test, y_test = split_data(input_df,
-#                                                                        output_df,
-#                                                                       True,
-#                                                                       TEST_SIZE)

@@ -4,11 +4,9 @@
 ## **Latar Belakang**
 Untuk membeli rumah, seseorang biasanya melalui banyak pertimbangan, dimulai dari menyesuaikan kebutuhan pribadi dan keadaan rumah. Namun untuk pengambilan keputusan akhir, biasanya pembeli rumah lebih memperhatikan harga rumah dibandingkan fasilitas yang ada didalam rumah. Oleh karena itu penting mengetahui atau memprediksi harga akhir rumah untuk menjadi preferensi seorang pembeli rumah untuk menentukan keputusan.
 
-
 ## **Objectives**
-- Membuat pipeline untuk membangun model prediksi rumah 
-
-
+- The main objective of this task is to predict house price based on several variables. 
+- The useful method for this task is regression model. 
 
 ## **The Training and Predict Scripts**
 
@@ -22,9 +20,7 @@ python src/predict.py
 ```
 
 ## **Methods**
-![](https://github.com/TeachingPacmann/PM_Deploy_DS/blob/52d1c869609d261498eb25530b58077521aa7719/diagram.png)
-
-## **Splitting Data**
+![](https://github.com/TeachingPacmann/PM_Deploy_DS/blob/52d1c869609d261498eb25530b58077521aa7719/diagram_alur.png)
 
 ## **Wrangling and Feature Engineering**
 
@@ -52,30 +48,29 @@ def run(params, xpath, ypath, dump_path, state='fit'):
         Data state for leakage handling. fit for training data, transform for validation and testing data
 
     '''
-
+    
     # Load variables and target pickle file
     house_variables = joblib.load(xpath)
     house_target = joblib.load(ypath)
-
-    # Due to resource issue, we just use six features with highest correlation to target class
-    house_numerical = house_variables[params['PREDICT_COLUMN']] 
     
-    # Handling missing value
-    df_numerical_imputed = numerical_imputer(house_numerical, state=state)
+    # Due to simplicity, we just use six features with highest correlation to target class
+    house_numerical = house_variables[params['TRAIN_COLUMN']]
     
     # Add a representative feature
-    df_add_feature = add_feature(df_numerical_imputed)
+    df_add_feature = add_feature(house_numerical, state=state)
+    
+    # Handling missing value
+    df_numerical_imputed = numerical_imputer(df_add_feature, state=state)
     
     # Normalization
-    df_normalized = normalization(df_add_feature, state=state) # df_joined
+    df_normalized = normalization(df_numerical_imputed, state=state)
     
-    # Save the result of preprocessed feature
+    # Save the result of preprocessed data
     joblib.dump(df_normalized, dump_path)
 
 ```
 
-
-## **Modelling**
+## **Training**
 
 ```python
 def main(params):
@@ -95,22 +90,23 @@ def main(params):
         - n_iter_search : RandomizedSearchCV number of iteration
 
     '''
+
     lasso = model_lib.model_lasso
     rf = model_lib.model_rf
     lsvr = model_lib.model_svr
-
-    # Initiate dictionary train_log_dict to be saved later in pickle containing model information in training phase
+    
+    # Make a dictionary "train_log_dict" to be saved later as pickle containing model information in training stage
     train_log_dict = {'model': [lasso, rf, lsvr],
                       'model_name': [],
                       'model_fit': [],
                       'model_report': [],
                       'model_score': [],
                       'fit_time': []}
-
+    
     # Read data after preprocessing
     x_train, y_train, x_valid, y_valid  = model_lib.read_data(params)
 
-    # Iterate list model 
+    # Iterate list model
     for model in train_log_dict['model']:
         # initiate the model
         param_model, base_model = model()
@@ -121,7 +117,7 @@ def main(params):
 
         # Training
         t0 = time.time()
-
+        
         # Searching best parameter using Random Search CV
         fitted_model,best_estimator = model_lib.fit(
             x_train, y_train, base_model, param_model, params)
@@ -137,26 +133,22 @@ def main(params):
         
         # Validate model to validation data
         score = model_lib.validation_score( x_valid, y_valid, best_estimator)
-        train_log_dict['model_score'].append(
-            score)
+        train_log_dict['model_score'].append(score)
 
     # Select which model in model list has best score evaluation (minimum rmse) in validation data
     best_model, best_estimator, best_report = model_lib.select_model(
         train_log_dict)
     print(
         f"Model: {best_model}, Score: {best_report}, Parameter: {best_estimator}")
-
+    
     # Dump model name
-    joblib.dump(best_model, f'output/model/train/base_model.pkl')
+    joblib.dump(best_model, f'output/model/train/model_name.pkl')
     # Dump best model estimator with best param
     joblib.dump(best_estimator, 'output/model/train/best_estimator.pkl')
     # Dump training log
     joblib.dump(train_log_dict, 'output/model/train/train_log.pkl')
+    
 ```
-
-
-## **Testing**
-
 
 ## **Prediction**
 
@@ -187,7 +179,11 @@ if __name__ == "__main__":
                   'predicted': []}
     
     # input data to predict
-
+    
+    # through file
+    # data_predict = 'data/2data.csv'
+    # file = 'csv'
+    
     # through input
     n_data = int(input(f"Input data (enter int value): "))
     data_predict = {}
@@ -206,6 +202,7 @@ if __name__ == "__main__":
     x_predict = feature_engineering_predict(x_input)
     
     # Make prediction
+    print(f"Running on prediction...\n")
     y_predicted = main_model.predict(x_predict)
     
     # Dump log prediction result
@@ -216,7 +213,8 @@ if __name__ == "__main__":
     print(f"Model: {predict_dict['model_name']},\n Predicted: {predict_dict['predicted']}\n")
     
     for i in range(len(x_predict)):
-        print(f"{i+1}. Data with rates (1-10) the overall condition of the house {x_input['OverallCond'][i]}, First Floor {x_input['1stFlrSF'][i]} square feet, were predict to have sale price {y_predicted[i]}\n")
+        print(f"{i+1}. Data with overall quality : {x_input['OverallQual'][i]}, First Floor: {x_input['FirstFlrSF'][i]} square feet, were predict to have sale price {y_predicted[i]}\n")
+    
 
 ```
 

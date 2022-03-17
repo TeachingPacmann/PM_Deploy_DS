@@ -82,42 +82,42 @@ def normalization(x_all,
     return normalized
 
 def run(params, xpath, ypath, dump_path, state='fit'):
+    '''
+    Main function of wrangling and feature engineering.
+    This function will applied in data training, testing and validation.
+    
+    Parameters
+    ----------
+    params: .yaml file
+        File containing necessary variables as constant variable such as location file and features name 
+        - PREDICT_COLUMN(str) : list of features to be used   
+    xpath: string
+        Location of features pickle file
+
+    ypath: string
+        Location of target pickle file
+
+    dump_path: string
+        Location to save the result of preprocessing
+
+    state: string
+        Data state for leakage handling. fit for training data, transform for validation and testing data
+
+    '''
+    
+    # Load variables and target pickle file
     house_variables = joblib.load(xpath)
     house_target = joblib.load(ypath)
     
-    # house_numerical = house_variables[params['NUM_COLUMN']]
-    # house_categorical = house_variables[params['CAT_COLUMN']]
+    # Due to simplicity, we just use six features with highest correlation to target class
+    house_numerical = house_variables[params['TRAIN_COLUMN']]
     
-    house_numerical = house_variables[params['PREDICT_COLUMN']] # comment
+    # Add a representative feature
+    df_add_feature = add_feature(house_numerical, state=state)
     
-    df_numerical_imputed = numerical_imputer(house_numerical, state=state)
-    # df_categorical_imputed = categorical_imputer(house_categorical)
+    # Handling missing value
+    df_numerical_imputed = numerical_imputer(df_add_feature, state=state)
     
-    # df_categorical_encoded = one_hot_encoder(df_categorical_imputed, state=state)
-    
-    # df_joined = pd.concat([df_numerical_imputed, df_categorical_encoded], axis=1)
-    df_add_feature = add_feature(df_numerical_imputed)
-    
-    df_normalized = normalization(df_add_feature, state=state) # df_joined
-    
+    # Normalization
+    df_normalized = normalization(df_numerical_imputed, state=state)
     joblib.dump(df_normalized, dump_path)
-
-
-#if __name__ == "__main__":
-#    f = open("src/params/preprocess_params.yaml", "r")
-#    params = yaml.load(f, Loader=yaml.SafeLoader)
-#    f.close()
-    
-#    temp = ['TRAIN','VALID','TEST']
-    
-#    for subgroup in temp:
-#        xpath = params[f'X_PATH_{subgroup}']
-#        ypath = params[f'Y_PATH_{subgroup}']
-#        dump_path = params[f'DUMP_{subgroup}']
-        
-#        if subgroup == 'TRAIN':
-#            state = 'fit'
-#        else:
-#            state = 'transform'
-        
-#        run(params, xpath, ypath, dump_path, state)
