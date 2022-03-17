@@ -96,8 +96,9 @@ def run(params, xpath, ypath, dump_path, state='fit'):
     # df_categorical_encoded = one_hot_encoder(df_categorical_imputed, state=state)
     
     # df_joined = pd.concat([df_numerical_imputed, df_categorical_encoded], axis=1)
+    df_add_feature = add_feature(df_numerical_imputed)
     
-    df_normalized = normalization(df_numerical_imputed, state=state) # df_joined
+    df_normalized = normalization(df_add_feature, state=state) # df_joined
     
     joblib.dump(df_normalized, dump_path)
 
