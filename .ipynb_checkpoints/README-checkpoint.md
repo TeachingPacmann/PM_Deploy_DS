@@ -5,8 +5,8 @@
 Untuk membeli rumah, seseorang biasanya melalui banyak pertimbangan, dimulai dari menyesuaikan kebutuhan pribadi dan keadaan rumah. Namun untuk pengambilan keputusan akhir, biasanya pembeli rumah lebih memperhatikan harga rumah dibandingkan fasilitas yang ada didalam rumah. Oleh karena itu penting mengetahui atau memprediksi harga akhir rumah untuk menjadi preferensi seorang pembeli rumah untuk menentukan keputusan.
 
 ## **Objectives**
-- The main objective of this task is to predict house price based on several variables. 
-- The useful method for this task is regression model. 
+- Tujuan utama dari tugas ini adalah untuk memprediksi harga rumah berdasarkan beberapa variabel.
+- Metode yang berguna untuk tugas ini adalah model regresi.
 
 ## **The Training and Predict Scripts**
 
