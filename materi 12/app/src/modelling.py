@@ -3,6 +3,7 @@ import pandas as pd
 import joblib
 from app.constant import MODEL_NAME, BEST_MODEL
 
+
 def modelling(x_predict: pd.DataFrame):
     model_name = joblib.load(MODEL_NAME)
     main_model = joblib.load(BEST_MODEL)

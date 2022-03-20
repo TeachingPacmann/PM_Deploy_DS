@@ -11,7 +11,7 @@ class FooBarModel(BaseModel):
     bar: BarModel
 
 
-m = FooBarModel(banana=3.14, foo='hello', bar={'whatever': 123})
+m = FooBarModel(banana=3.14, foo="hello", bar={"whatever": 123})
 
 print(dict(m))
 """
@@ -25,9 +25,9 @@ print(dict(m))
 """
 # for name, value in m:
 #     print(f'{name}: {value}')
-    #> banana: 3.14
-    #> foo: hello
-    #> bar: whatever=123
+# > banana: 3.14
+# > foo: hello
+# > bar: whatever=123
 
 data = {}
 for i, a in enumerate(m):

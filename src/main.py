@@ -7,44 +7,46 @@ import preprocess_data as ppr
 import training
 import testing
 
-#Open yaml
-f = open("src/params/params.yaml", "r")
-params = yaml.load(f, Loader=yaml.SafeLoader)
-f.close()
 
-#Splitting Data
-print("Running on splitting...")
-data_house = read_data(params['DATA_PATH'])
-output_df, input_df = split_input_output(
-                            data_house,
-                            params['TARGET_COLUMN'])
+def run_pipeline():
+    # Open yaml
+    f = open("src/params/params.yaml", "r")
+    params = yaml.load(f, Loader=yaml.SafeLoader)
+    f.close()
 
-X_train, y_train, X_valid, y_valid, X_test, y_test = split_data(input_df,
-                                                                output_df,
-                                                                True,
-                                                                params['TEST_SIZE'])
+    # Splitting Data
+    print("Running on splitting...")
+    data_house = read_data(params["DATA_PATH"])
+    output_df, input_df = split_input_output(data_house, params["TARGET_COLUMN"])
 
-temp = ['TRAIN','VALID','TEST']
+    X_train, y_train, X_valid, y_valid, X_test, y_test = split_data(
+        input_df, output_df, True, params["TEST_SIZE"]
+    )
 
-#Feature Engineering
+    temp = ["TRAIN", "VALID", "TEST"]
 
-for subgroup in temp:
-    print(f"Running on feature engineering {subgroup}...")
-    xpath = params[f'X_PATH_{subgroup}']
-    ypath = params[f'Y_PATH_{subgroup}']
-    dump_path = params[f'DUMP_{subgroup}']
+    # Feature Engineering
 
-    if subgroup == 'TRAIN':
-        state = 'fit'
-    else:
-        state = 'transform'
-    ppr.run(params, xpath, ypath, dump_path, state)
+    for subgroup in temp:
+        print(f"Running on feature engineering {subgroup}...")
+        xpath = params[f"X_PATH_{subgroup}"]
+        ypath = params[f"Y_PATH_{subgroup}"]
+        dump_path = params[f"DUMP_{subgroup}"]
 
-    
-#Training and Tuning
-print(f"Running on training and hyperparameter tuning...")
-training.main(params)
+        if subgroup == "TRAIN":
+            state = "fit"
+        else:
+            state = "transform"
+        ppr.run(params, xpath, ypath, dump_path, state)
 
-#Predicting and Last Evaluation
-print(f"Last evaluation on test data")
-testing.main(params)
+    # Training and Tuning
+    print(f"Running on training and hyperparameter tuning...")
+    training.main(params)
+
+    # Predicting and Last Evaluation
+    print(f"Last evaluation on test data")
+    testing.main(params)
+
+
+if __name__ == "__main__":
+    run_pipeline()

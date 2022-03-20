@@ -12,8 +12,12 @@ class ErrorMessage(str, Enum):
     INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR"
     UNPROCESSABLE_ENTITY = "UNPROCESSABLE_ENTITY"
 
+
 async def CustomExceptionHandler(request: Request, exception: BaseException):
-    return JSONResponse (status_code = 500, content = {"message": "Something happened in our config!"})
+    return JSONResponse(
+        status_code=500, content={"message": "Something happened in our config!"}
+    )
+
 
 # async def validation_exception_handler(
 #     request: Request, exc: RequestValidationError
@@ -46,6 +50,7 @@ async def starlette_exception_handler(request, exc: StarletteHTTPException):
         status_code=exc.status_code,
         content=response,
     )
+
 
 class BaseException(Exception):
     def __init__(self, message: str):

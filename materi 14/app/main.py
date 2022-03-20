@@ -13,10 +13,11 @@ import logging
 app = FastAPI()
 
 # setup loggers
-logging.config.fileConfig('app/logging.conf', disable_existing_loggers=False)
+logging.config.fileConfig("app/logging.conf", disable_existing_loggers=False)
 
 # get root logger
 logger = logging.getLogger(__name__)
+
 
 class Item(BaseModel):
     OverallCond: int
@@ -25,6 +26,7 @@ class Item(BaseModel):
     fstFlrSF: int
     GarageCars: int
     GarageArea: int
+
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request, exc):
@@ -45,9 +47,11 @@ async def validation_exception_handler(request, exc):
             message=f"There's an error in the validation handler - {str(exc)}"
         )
 
+
 @app.get("/")
 async def read_root():
     return {"Hello": "World"}
+
 
 # first endpoint
 @app.get("/log_now")
@@ -56,9 +60,11 @@ def log_now():
 
     return {"result": "OK"}
 
+
 @app.get("/status")
 async def status_web():
     return {"STATUS": "OKE"}
+
 
 @app.post("/predict-house/v1/")
 def house_pricing(item: Item):
@@ -81,13 +87,9 @@ def house_pricing(item: Item):
 
         result = {"result": y_predicted}
 
-        return JSONResponse(
-            status_code=200,
-            content=result
-        )
+        return JSONResponse(status_code=200, content=result)
 
     except Exception as e:
         message = "There is error in our config!"
         logger.error(e)
         raise BaseException(message=message)
-
