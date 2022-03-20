@@ -26,8 +26,8 @@ def read_data(path, save_file=True, return_file=True):
 
 def split_input_output(dataset, target_column, save_file=True, return_file=True):
 
-    output_df = dataset[target_column]
-    input_df = dataset.drop([target_column], axis=1)
+    output_df = dataset[target_column] # dependent features/target variable
+    input_df = dataset.drop([target_column], axis=1) # all independent features
 
     if save_file:
         joblib.dump(output_df, "output/read_data/output_df.pkl")

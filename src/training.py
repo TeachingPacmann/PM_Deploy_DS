@@ -41,7 +41,7 @@ def main(params):
     # Read data after preprocessing
     x_train, y_train, x_valid, y_valid = model_lib.read_data(params)
 
-    # Iterate list model
+    # Iterate training for list model
     for model in train_log_dict["model"]:
         # initiate the model
         param_model, base_model = model()

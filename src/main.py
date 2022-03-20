@@ -11,7 +11,7 @@ import testing
 def run_pipeline():
     # Open yaml
     f = open("src/params/params.yaml", "r")
-    params = yaml.load(f, Loader=yaml.SafeLoader)
+    params = yaml.load(f, Loader=yaml.SafeLoader) # loading yaml file to json/dictionary format variable
     f.close()
 
     # Splitting Data
