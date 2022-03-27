@@ -75,9 +75,9 @@ def main(params):
         f"Model: {best_model}, Score: {best_report}, Parameter: {best_estimator}")
     
     # Dump model name
-    joblib.dump(best_model, f'output/model/train/model_name.pkl')
+    joblib.dump(best_model, f'output/model/train/model_name_v1.1.pkl')
     # Dump best model estimator with best param
-    joblib.dump(best_estimator, 'output/model/train/best_estimator.pkl')
+    joblib.dump(best_estimator, 'output/model/train/best_estimator_v1.1.pkl')
     # Dump training log
-    joblib.dump(train_log_dict, 'output/model/train/train_log.pkl')
+    joblib.dump(train_log_dict, 'output/model/train/train_log_v1.1.pkl')
     

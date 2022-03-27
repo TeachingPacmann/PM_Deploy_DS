@@ -8,7 +8,7 @@ import training
 import testing
 
 #Open yaml
-f = open("src/params/params.yaml", "r")
+f = open("src/params/params_2.yaml", "r")
 params = yaml.load(f, Loader=yaml.SafeLoader)
 f.close()
 
