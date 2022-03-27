@@ -70,12 +70,12 @@ def split_data(data_input, data_ouput, return_file=False, TEST_SIZE=0.2):
             y_train,
             TEST_SIZE)
 
-    joblib.dump(x_train, "output/read_data/x_train.pkl")
-    joblib.dump(y_train, "output/read_data/y_train.pkl")
-    joblib.dump(x_valid, "output/read_data/x_valid.pkl")
-    joblib.dump(y_valid, "output/read_data/y_valid.pkl")
-    joblib.dump(x_test, "output/read_data/x_test.pkl")
-    joblib.dump(y_test, "output/read_data/y_test.pkl")
+    joblib.dump(x_train, "output/read_data/x_train_v1.1.pkl")
+    joblib.dump(y_train, "output/read_data/y_train_v1.1.pkl")
+    joblib.dump(x_valid, "output/read_data/x_valid_v1.1.pkl")
+    joblib.dump(y_valid, "output/read_data/y_valid_v1.1.pkl")
+    joblib.dump(x_test, "output/read_data/x_test_v1.1.pkl")
+    joblib.dump(y_test, "output/read_data/y_test_v1.1.pkl")
 
     if return_file:
         return x_train, y_train, \
