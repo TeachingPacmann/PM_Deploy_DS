@@ -6,12 +6,12 @@ MODEL_NAME = "app/models/base_model.pkl"
 BEST_MODEL = "app/models/best_estimator.pkl"
 # TRAIN_LOG: "models/train_log.pkl"
 
-PREDICT_COLUMN_TYPE = { "OverallCond": "int",
+PREDICT_COLUMN_TYPE = { "OverallQual": "int",
     "GrLivArea": "int",
     "TotalBsmtSF": "int",
-    "1stFlrSF": "int",
+    "FirstFlrSF": "int",
     "GarageCars": "int",
     "GarageArea": "int" }
 
-PREDICT_COLUMN = ["OverallCond", "GrLivArea", "TotalBsmtSF",
-                  "1stFlrSF", "GarageCars", "GarageArea"]
+PREDICT_COLUMN = ["OverallQual", "GrLivArea", "TotalBsmtSF",
+                  "FirstFlrSF", "GarageCars", "GarageArea"]

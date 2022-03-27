@@ -22,6 +22,27 @@ def set_dtypes(data_input):
     data = data_input.astype(PREDICT_COLUMN_TYPE)
     return data
 
+def clean_column_name(df):
+    df.rename(columns={
+        "1stFlrSF": "FirstFlrSF",
+    }, inplace=True,
+    )
+    return df
+
+def mathematical_transforms(df):
+    df["_OQuGLA"] = df.OverallQual * df.GrLivArea
+    return df
+
+def adding_feature(x, state):
+    df = x.copy()
+    if (state=="predict"):
+        df_transform = mathematical_transforms(df)
+    else:
+        df_clean = clean_column_name(df)
+        df_transform = mathematical_transforms(df_clean)
+    return df_transform
+
+
 def construct_df(data_to_predict: dict) -> pd.DataFrame:
     df_to_predict = pd.DataFrame(data=data_to_predict)
     df_to_predict = set_dtypes(df_to_predict)
@@ -37,6 +58,7 @@ def feature_engineering_predict(data_to_predict) -> pd.DataFrame:
     data_to_predict = data_to_predict.copy()
 
     house_numerical = data_to_predict[PREDICT_COLUMN]
-    df_numerical_imputed = prep.numerical_imputer(house_numerical, state=state)
-    x_predict = prep.normalization(df_numerical_imputed, state=state) # df_joined
+    df_add_feature = adding_feature(house_numerical, state="predict")
+    df_numerical_imputed = prep.numerical_imputer(df_add_feature, state=state)
+    x_predict = prep.normalization(df_numerical_imputed, state=state)
     return x_predict
