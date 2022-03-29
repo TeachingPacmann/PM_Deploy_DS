@@ -19,10 +19,10 @@ logging.config.fileConfig('app/logging.conf', disable_existing_loggers=False)
 logger = logging.getLogger(__name__)
 
 class Item(BaseModel):
-    OverallCond: int
+    OverallQual: int
     GrLivArea: int
     TotalBsmtSF: int
-    fstFlrSF: int
+    FirstFlrSF: int
     GarageCars: int
     GarageArea: int
 
@@ -65,9 +65,6 @@ def house_pricing(item: Item):
     try:
         data_predict = {}
         for i, value in enumerate(item):
-            if i == 3:
-                data_predict["1stFlrSF"] = [value[1]]
-
             data_predict[value[0]] = [value[1]]
 
         x_input = construct_df(data_predict)
