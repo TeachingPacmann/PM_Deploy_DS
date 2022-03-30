@@ -1,16 +1,21 @@
-# import uvicorn
+import logging.config
+
 from app.src.feature_engineering_input import construct_df, feature_engineering_predict
 from app.src.modelling import modelling
-from fastapi import FastAPI
-from typing import Optional
+from fastapi import FastAPI, Header, HTTPException
 from pydantic import BaseModel
-from fastapi.responses import JSONResponse, PlainTextResponse
-from app.exception import BaseException
+from fastapi.responses import JSONResponse
+from app.exception import BaseException, validation_exception_handler, starlette_exception_handler
 from fastapi.exceptions import RequestValidationError
-from typing import Any, Dict
-import logging
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
-app = FastAPI()
+
+app = FastAPI(
+    exception_handlers={
+        RequestValidationError: validation_exception_handler,
+        StarletteHTTPException: starlette_exception_handler,
+    },
+)
 
 # setup loggers
 logging.config.fileConfig('app/logging.conf', disable_existing_loggers=False)
@@ -26,28 +31,12 @@ class Item(BaseModel):
     GarageCars: int
     GarageArea: int
 
-@app.exception_handler(RequestValidationError)
-async def validation_exception_handler(request, exc):
-    try:
-        response: Dict[str, Any] = {}
-        response["message"] = ", ".join(
-            [f"{x['loc'][-1]} - {x['ctx']['msg']} - {x['type']}" for x in exc.errors()]
-        )
-        response["status"] = "UNPROCESSABLE_ENTITY"
+fake_secret_token = "pacmannpmdata"
 
-        return JSONResponse(
-            status_code=422,
-            content=response,
-        )
-
-    except Exception as exc:
-        raise BaseException(
-            message=f"There's an error in the validation handler - {str(exc)}"
-        )
 
 @app.get("/")
 async def read_root():
-    return {"Hello": "World"}
+    return {"msg": "Hello World"}
 
 # first endpoint
 @app.get("/log_now")
@@ -56,12 +45,11 @@ def log_now():
 
     return {"result": "OK"}
 
-@app.get("/status")
-async def status_web():
-    return {"STATUS": "OKE"}
-
 @app.post("/predict-house/v1/")
-def house_pricing(item: Item):
+def house_pricing(item: Item, x_token: str = Header(...)):
+    if x_token != fake_secret_token:
+        raise HTTPException(status_code=400, detail="Invalid X-Token header")
+
     try:
         data_predict = {}
         for i, value in enumerate(item):
