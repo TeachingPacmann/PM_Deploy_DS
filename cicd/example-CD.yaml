@@ -1,0 +1,19 @@
+# build docker image
+steps:
+  - name: gcr.io/cloud-builders/docker # specify container registry address
+    entrypoint: "/bin/bash" # terminal entrypoint in Linux OS
+    dir: "./src" # specify folder that you want to use as a created image
+    args: # command that will run linux terminal
+      - -c
+      - |
+        docker build \
+          -t gcr.io/$PROJECT_ID/image-name:latest \
+          -f Dockerfile .
+
+# push docker image
+  - name: gcr.io/cloud-builders/docker
+    entrypoint: /bin/bash
+    args:
+      - -c
+      - |
+        docker push gcr.io/$PROJECT_ID/image-name:latest

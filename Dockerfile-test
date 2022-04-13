@@ -1,0 +1,15 @@
+FROM python:3.9
+
+RUN apt-get update && apt-get install -y \
+    curl \
+    && rm -ff /var/lib/apt/lists/*
+
+WORKDIR /opt/apps/project
+
+COPY . /opt/apps
+
+RUN pip install -e .
+
+RUN chmod +x /opt/apps/entrypoint-test.sh
+
+ENTRYPONT ["./entrypoint-test.sh"]

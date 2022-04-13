@@ -6,6 +6,7 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
+
 class Item(BaseModel):
     OverallQual: int
     GrLivArea: int
@@ -14,13 +15,16 @@ class Item(BaseModel):
     GarageCars: int
     GarageArea: int
 
+
 @app.get("/")
 async def read_root():
     return {"Hello": "World"}
 
+
 @app.get("/status")
 async def status_web():
     return {"STATUS": "OKE"}
+
 
 @app.post("/predict-house/v1/")
 def house_pricing(item: Item):
