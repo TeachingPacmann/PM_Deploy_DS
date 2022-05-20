@@ -5,7 +5,11 @@ from app.src.modelling import modelling
 from fastapi import FastAPI, Header, HTTPException
 from pydantic import BaseModel
 from fastapi.responses import JSONResponse
-from app.exception import BaseException, validation_exception_handler, starlette_exception_handler
+from app.exception import (
+    BaseException,
+    validation_exception_handler,
+    starlette_exception_handler,
+)
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
@@ -18,10 +22,11 @@ app = FastAPI(
 )
 
 # setup loggers
-logging.config.fileConfig('app/logging.conf', disable_existing_loggers=False)
+logging.config.fileConfig("app/logging.conf", disable_existing_loggers=False)
 
 # get root logger
 logger = logging.getLogger(__name__)
+
 
 class Item(BaseModel):
     OverallQual: int
@@ -31,6 +36,7 @@ class Item(BaseModel):
     GarageCars: int
     GarageArea: int
 
+
 fake_secret_token = "pacmannpmdata"
 
 
@@ -38,12 +44,14 @@ fake_secret_token = "pacmannpmdata"
 async def read_root():
     return {"msg": "Hello World"}
 
+
 # first endpoint
 @app.get("/log_now")
 def log_now():
     logger.info("logging from the root logger")
 
     return {"result": "OK"}
+
 
 @app.post("/predict-house/v1/")
 def house_pricing(item: Item, x_token: str = Header(...)):
@@ -66,13 +74,9 @@ def house_pricing(item: Item, x_token: str = Header(...)):
 
         result = {"result": y_predicted}
 
-        return JSONResponse(
-            status_code=200,
-            content=result
-        )
+        return JSONResponse(status_code=200, content=result)
 
     except Exception as e:
         message = "There is error in our config!"
         logger.error(e)
         raise BaseException(message=message)
-

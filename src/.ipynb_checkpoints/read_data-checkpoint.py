@@ -34,8 +34,7 @@ def split_input_output(dataset,
                        return_file = True):
     
     output_df = dataset[target_column]
-    input_df = dataset.drop([target_column],
-                            axis = 1)
+    input_df = dataset.drop([target_column],axis = 1)
     
     if save_file:
         joblib.dump(output_df, "output/read_data/output_df.pkl")

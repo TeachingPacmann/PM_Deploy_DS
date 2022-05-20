@@ -6,6 +6,7 @@ from fastapi import Request
 from fastapi.responses import JSONResponse
 from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY
 
+
 async def starlette_exception_handler(request, exc: StarletteHTTPException):
     response = {
         "message": str(exc.detail),
@@ -16,11 +17,12 @@ async def starlette_exception_handler(request, exc: StarletteHTTPException):
         content=response,
     )
 
+
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
     try:
         response: Dict[str, Any] = {}
         response["message"] = ", ".join(
-             [f"{x['loc'][-1]} - {x['msg']} - {x['type']}" for x in exc.errors()]
+            [f"{x['loc'][-1]} - {x['msg']} - {x['type']}" for x in exc.errors()]
         )
         response["status"] = "UNPROCESSABLE_ENTITY"
 
@@ -34,6 +36,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
             message=f"There's an error in the validation handler - {str(exc)}"
         )
 
+
 class BaseException(Exception):
     message = "INTERNAL SERVER ERROR"
     status_code = 500
@@ -42,7 +45,4 @@ class BaseException(Exception):
         self.message = message
 
     def base_return(self) -> Dict:
-        return {
-            "message": self.message,
-            "status": "INTERNAL SERVER ERROR"
-        }
+        return {"message": self.message, "status": "INTERNAL SERVER ERROR"}

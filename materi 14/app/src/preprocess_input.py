@@ -6,21 +6,17 @@ from sklearn.preprocessing import StandardScaler
 import yaml
 
 
-def numerical_imputer(numerical,
-                    state = 'transform'):
+def numerical_imputer(numerical, state="transform"):
 
     index = numerical.index
     cols = numerical.columns
 
-    if state == 'fit':
-        imputer = SimpleImputer(
-            missing_values=np.nan,
-            strategy="mean")
+    if state == "fit":
+        imputer = SimpleImputer(missing_values=np.nan, strategy="mean")
 
         imputer.fit(numerical)
-        joblib.dump(imputer,
-                    "app/models/estimator/numerical_imputer.pkl")
-    elif state == 'transform':
+        joblib.dump(imputer, "app/models/estimator/numerical_imputer.pkl")
+    elif state == "transform":
         imputer = joblib.load("app/models/estimator/numerical_imputer.pkl")
 
     imputed = imputer.transform(numerical)
@@ -30,19 +26,16 @@ def numerical_imputer(numerical,
     return imputed
 
 
-def normalization(x_all,
-                  state = 'fit'):
+def normalization(x_all, state="fit"):
     index = x_all.index
     cols = x_all.columns
 
-
-    if state == 'fit':
+    if state == "fit":
         normalizer = StandardScaler()
         normalizer.fit(x_all)
-        joblib.dump(normalizer,
-                    "app/models/estimator/normalizer.pkl")
+        joblib.dump(normalizer, "app/models/estimator/normalizer.pkl")
 
-    elif state == 'transform':
+    elif state == "transform":
         normalizer = joblib.load("app/models/estimator/normalizer.pkl")
 
     normalized = normalizer.transform(x_all)
